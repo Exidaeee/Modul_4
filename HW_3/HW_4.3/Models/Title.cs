@@ -10,6 +10,6 @@ namespace HW_4._3.Models
     {
         public int TitleId { get; set; }
         public string Name { get; set; }
-        public ICollection<Employee> Employees { get; set; } 
+        public virtual ICollection<Employee> Employees { get; set; } 
     }
 }

@@ -21,7 +21,8 @@ namespace HW_4._3
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=HW_4.3;Trusted_Connection=True;MultipleActiveResultSets=true");
+            builder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=HW_4.3;Trusted_Connection=True;MultipleActiveResultSets=true")
+                   .UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
