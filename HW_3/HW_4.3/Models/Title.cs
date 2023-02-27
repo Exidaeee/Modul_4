@@ -10,6 +10,6 @@ namespace HW_4._3.Models
     {
         public int TitleId { get; set; }
         public string Name { get; set; }
-        public List<Employee> Employees { get; set; } = new List<Employee>();
+        public ICollection<Employee> Employees { get; set; } 
     }
 }

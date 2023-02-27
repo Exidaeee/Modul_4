@@ -16,7 +16,7 @@ namespace HW_4._3.Models
         public int OfficeId { get; set; }
         public int TitleId { get; set; }
         public Office Office { get; set; }
-        public List<EmployeeProject> EmployeeProjects { get; set; } = new List<EmployeeProject>();
+        public ICollection<EmployeeProject> EmployeeProjects { get; set; } 
         public Title Title { get; set; }
     }
 }
