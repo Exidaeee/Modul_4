@@ -13,7 +13,7 @@ namespace HW_4._3.Models
         public int Budget { get; set; }
         public DateTime StertedDate { get; set; }
         public int ClientId { get; set; }
-        public ICollection<EmployeeProject> EmployeeProjects { get; set; }
-        public Client Client { get; set; }
+        public virtual ICollection<EmployeeProject> EmployeeProjects { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

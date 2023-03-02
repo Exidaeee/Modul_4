@@ -13,6 +13,6 @@ namespace HW_4._3.Models
         public string Phone { get; set; }
         public string Address { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public ICollection<Project> Projects { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

@@ -15,8 +15,8 @@ namespace HW_4._3.Models
         public DateTime? DateOfBirth { get; set; }
         public int OfficeId { get; set; }
         public int TitleId { get; set; }
-        public Office Office { get; set; }
-        public ICollection<EmployeeProject> EmployeeProjects { get; set; } 
-        public Title Title { get; set; }
+        public virtual Office Office { get; set; }
+        public virtual ICollection<EmployeeProject> EmployeeProjects { get; set; } 
+        public virtual Title Title { get; set; }
     }
 }

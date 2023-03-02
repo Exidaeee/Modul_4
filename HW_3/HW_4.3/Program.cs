@@ -10,26 +10,73 @@ namespace HW_4._3
         {         
             using (var context = new DatabaseContext()) 
             {
-                var Clients = new List<Client>()
+                var employee = new Employee()
                 {
-                   new Client() { Name = "Viktor", Address = "Leipziger Str. 13", DateOfBirth = DateTime.Parse("12.08.1995"), Phone = "380999999999" },
-                   new Client() { Name = "Yulia", Address = "Warschauen Str. 18", DateOfBirth = DateTime.Parse("09.06.1998"), Phone = "380343434344" },
-                   new Client() { Name = "Alex", Address = "Berliner Str. 22", DateOfBirth = DateTime.Parse("05.11.1992"), Phone = "380345684344" },
-                   new Client() { Name = "Vitalii", Address = "Munchener Str 12", Phone = "380343436394" },
-                   new Client() { Name = "Anna", Address = "Milch Weg Str. 14", Phone= "380345554344" }
+                    FirstName = "Evgen",
+                    LastName = "Popov",
+                    HiredDate = DateTime.Parse("10.09.2018"),
+                    TitleId = 3,
+                    OfficeId = 1
                 };
-                context.Clients.AddRange(Clients);
+                context.Add(employee);
+                var title = new Title() { Name = "Manager" };
+                context.Add(title);
+                var office = new Office() { Ttitle = " ", Location = "New York" };
+                context.Add(office);
                 context.SaveChanges();
-                var Projects = new List<Project>()
+                var query =
+                from t1 in context.Offices
+                join t2 in context.Projects on t1.OfficeId equals t2.ProjectId into t2Join
+                from t2Result in t2Join.DefaultIfEmpty()
+                join t3 in context.Employees on t1.OfficeId equals t3.EmployeeId into t3Join
+                from t3Result in t3Join.DefaultIfEmpty()
+                select new { t1, t2Result, t3Result };
+
+                var query2 =
+                from employees in context.Employees
+                where (DateTime.Now - employee.HiredDate).Days > 30
+                select employees;
+
+                var query3 = context.Database.BeginTransaction();
+                try
                 {
-                    new Project() { Name = "Project 1", Budget = 2500, StertedDate = DateTime.Parse("06.02.2020"), ClientId = Clients[0].ClientId },
-                    new Project() { Name = "Project 2", Budget = 3000, StertedDate = DateTime.Parse("05.10.2022"), ClientId = Clients[1].ClientId },
-                    new Project() { Name = "Project 3", Budget = 4500, StertedDate = DateTime.Parse("08.10.2019"), ClientId = Clients[2].ClientId },
-                    new Project() { Name = "Project 4", Budget = 2000, StertedDate = DateTime.Parse("10.05.2020"), ClientId = Clients[3].ClientId },
-                    new Project() { Name = "Project 5", Budget = 3500, StertedDate = DateTime.Parse("09.09.2021"), ClientId = Clients[4].ClientId }
+                    var Employee = context.Employees.Single(i => i.EmployeeId == 7);
+                    Employee.FirstName = "Andrij";
+                    Employee.LastName = "Luzan";
+                    var Employee1 = context.Employees.Single(i => i.EmployeeId == 8);
+                    Employee1.FirstName = "Mykola";
+                    Employee1.LastName = "Zoryanov";
+                }
+                catch (Exception)
+                {
+                    query3.Rollback();
+                }
+
+                var query4 = new Employee
+                {
+                    FirstName = "Viktor",
+                    LastName = "Chehov",
+                    HiredDate = DateTime.Parse("10.09.2020"),
+                    TitleId = 3,
+                    OfficeId = 1
                 };
-                context.Projects.AddRange(Projects);
+
+                context.Employees.Add(query4);
                 context.SaveChanges();
+
+                var query5 = context.Employees.FirstOrDefault(e => e.EmployeeId == 1);
+
+                if (query5 != null)
+                {
+                    context.Employees.Remove(query5);
+                    context.SaveChanges();
+                }
+
+                var query6 =
+                from employees in context.Employees
+                group employees by employee.Title.Name into g
+                where !g.Key.Contains("a")
+                select new { Role = g.Key };
             }
         }
     }
