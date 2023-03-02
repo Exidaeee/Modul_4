@@ -11,6 +11,6 @@ namespace HW_4._3.Models
         public int OfficeId { get; set; }
         public string Ttitle { get; set; }
         public string Location { get; set; }
-        public List<Employee> Employees { get; set; } = new List<Employee>();
+        public ICollection<Employee> Employees { get; set; }
     }
 }

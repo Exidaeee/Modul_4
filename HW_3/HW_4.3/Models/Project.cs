@@ -12,6 +12,8 @@ namespace HW_4._3.Models
         public string Name { get; set; }
         public int Budget { get; set; }
         public DateTime StertedDate { get; set; }
-        public List<EmployeeProject> EmployeeProjects { get; set; } = new List<EmployeeProject>();
+        public int ClientId { get; set; }
+        public ICollection<EmployeeProject> EmployeeProjects { get; set; }
+        public Client Client { get; set; }
     }
 }
